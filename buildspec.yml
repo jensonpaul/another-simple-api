@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Installing required packages..."
+      - go get -u github.com/stretchr/testify
+  pre_build:
+    commands:
+      - echo "Running tests..."
+      - go test -coverprofile=coverage.out
+  build:
+    commands:
+      - echo "Building the application..."
+      - go build -o main
+
+artifacts:
+  files:
+    - main
+    - Procfile
+    - coverage.out
+
+reports:
+  test-coverage: # Test coverage report
+    file-format: COBERTURAXML
+    files:
+      - coverage.out
+    base-directory: '.'
